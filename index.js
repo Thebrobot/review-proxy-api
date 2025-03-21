@@ -4,17 +4,16 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
+
+// ✅ Allow CORS for your domain
+app.use(cors({ origin: 'https://thebrobot.com' }));
 
 app.get('/textsearch', async (req, res) => {
   const query = req.query.query;
   const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(query)}&key=${process.env.API_KEY}`;
+
   try {
     const response = await fetch(url);
-    const contentType = response.headers.get('content-type');
-    if (!contentType || !contentType.includes('application/json')) {
-      return res.status(500).json({ error: 'Invalid response format from Google API' });
-    }
     const data = await response.json();
     res.json(data);
   } catch (err) {
