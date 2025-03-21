@@ -4,7 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-app.use(cors({ origin: 'https://thebrobot.com' }));
+app.use(cors());
 
 app.get('/textsearch', async (req, res) => {
   const query = req.query.query;
